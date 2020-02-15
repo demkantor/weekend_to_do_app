@@ -7,18 +7,38 @@ function onReady(){
     displayList();
     $('.taskList').on('click', '.deleteMeButton', deleteMe);
     $('.taskList').on('click', '.completeMeButton', completeMe);
+    $('.addTaskButton').on('click', addTask);
 }
+
+function addTask(){
+    let newTask = $('.addTask').text();
+    let objectToSend = {
+        name: newTask
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/tasks',
+        data: objectToSend
+    }).then(function(response){
+        console.log(response);
+        $('.addTask').text("Add New Task");
+        displayList();
+    }).catch(function(er){
+        alert('error adding new task', err);
+    })
+
+}//end addTask
 
 function completeMe(){
     let selectedId = $(this).parent().data('id');
     let completed = $(this).data('completed');
     console.log('in completeMe with id:', selectedId, completed);
-}
+}//end CompleteMe
 
 function deleteMe(){
     let selectedId = $(this).data('id');
     console.log('in deleteMe with id:', selectedId);
-}
+}//end deleteMe
 
 function displayList(){
     $.ajax({
@@ -38,4 +58,4 @@ function displayList(){
     }).catch(function(err){
         alert('Error getting Task List', err);
     })
-}
+}//end displayList

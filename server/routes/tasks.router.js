@@ -43,6 +43,19 @@ router.put('/:id', (req,res)=>{
     })
 })//end PUT tasks
 
+//delete task row from database by id
+router.delete('/:id', (req,res)=>{
+    console.log('tasks DELETE table row:', req.params.id);
+    const query = `DELETE FROM "tasks" WHERE id=$1;`;
+    const values = [req.params.id];
+    pool.query(query,values).then((response)=>{
+        console.table(response);
+        res.sendStatus(200);
+    }).catch((err)=>{
+        console.log('error with DELETE,', err);
+        res.sendStatus(500);
+    })
+})//end tasks DELETE
 
 
 //exports

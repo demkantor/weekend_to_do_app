@@ -11,6 +11,8 @@ function onReady(){
     $('.addTaskButton').on('click', addTask);
 }
 
+
+
 function addTask(){
     let newTask = $('.addTask').text();
     let objectToSend = {
@@ -58,6 +60,31 @@ function completeSwap(){
 function deleteMe(){
     let selectedId = $(this).data('id');
     console.log('in deleteMe with id:', selectedId);
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: 'DELETE',
+                url: `/tasks/${selectedId}`
+            }).then(function(response){
+                console.log(response);
+                displayList();
+                swal("Poof! Your task has been removed!", {
+                    icon: "success",
+                  });
+            }).catch(function(err){
+                alert('error with DELETE:', err);
+            })
+        } else {
+          swal("Your task will stay!");
+        }
+      });
 }//end deleteMe
 
 function displayList(){

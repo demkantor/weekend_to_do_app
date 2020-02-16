@@ -29,7 +29,19 @@ router.post('/', (req,res)=>{
     })
 })//end POST tasks
 
-
+//toggle complete in database
+router.put('/:id', (req,res)=>{
+    console.log('in tasks PUT:', req.params.id, req.body.completed);
+    const query = `UPDATE "tasks" SET "completed"=$1 WHERE id=$2;`;
+    const values =[req.body.completed, req.params.id];
+    pool.query(query, values).then((results)=>{
+        console.table(results);
+        res.sendStatus(200);
+    }).catch((err)=>{
+        console.log('error with UPDATE', err);
+        res.sendStatus(500);
+    })
+})//end PUT tasks
 
 
 

@@ -60,15 +60,16 @@ body{
     grid-auto-rows: minmax(65px, auto);
 }
 
-.bottomRow{
-    display: grid;
-    grid-template-columns: repeat(15, 1fr);
-    grid-column: span 9;
+.bottomRow {
+    background-image: url("headerOne.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    grid-column-start: 5;
+    grid-column-end: span 1;
 }
 
-.addTask {
-    grid-column-start: auto;
-    grid-column: span 13;
+.addTask { 
+    display: flex;
     border: 2px solid #ffa94d;
     border-radius: 5px;
     background-color: #ffd8a8;
@@ -78,14 +79,15 @@ body{
 }
 
 .addTaskButton {
-    grid-column-start: auto;
-    grid-column: span 2;
     border: 2px solid #ffa94d;
     border-radius: 5px;
     padding: 1em;
+    float: center;
     background-image: url("plus3.png");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% ;
+    height: 30px;
+    width: 30px;
     cursor: pointer;
 }
 

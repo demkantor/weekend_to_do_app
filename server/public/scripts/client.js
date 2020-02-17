@@ -14,21 +14,23 @@ function onReady(){
 
 
 function addTask(){
-    let newTask = $('.addTask').text();
-    let objectToSend = {
-        name: newTask
-    }
-    $.ajax({
-        type: 'POST',
-        url: '/tasks',
-        data: objectToSend
-    }).then(function(response){
-        console.log(response);
-        $('.addTask').text("Add New Task");
-        displayList();
-    }).catch(function(er){
-        alert('error adding new task', err);
-    })
+    swal("What new task would you like to add?", {
+        content: "input",
+      })
+      .then((value) => {
+        swal(`your new task: ${value} will be added!`);
+        $.ajax({
+            type: 'POST',
+            url: '/tasks',
+            data: {name: value}
+        }).then(function(response){
+            console.log(response);
+            $('.addTask').text("Add New Task");
+            displayList();
+        }).catch(function(er){
+            alert('error adding new task', err);
+        })
+    });   
 }//end addTask
 
 function completeMe(id,completedSwap){

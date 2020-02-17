@@ -11,35 +11,37 @@ function onReady(){
     $('.addTaskButton').on('click', addTask);
 }
 
-
-
 function addTask(){
+    //sweet alerts to allow for input upon button click
     swal("What new task would you like to add?", {
         content: "input",
       })
       .then((value) => {
-        swal(`your new task: ${value} will be added!`);
-        $.ajax({
-            type: 'POST',
-            url: '/tasks',
-            data: {name: value}
-        }).then(function(response){
-            console.log(response);
-            $('.addTask').text("Add New Task");
-            displayList();
-        }).catch(function(er){
-            alert('error adding new task', err);
-        })
+          if(value != ''){
+            swal(`your new task: ${value} will be added!`);
+            $.ajax({
+                type: 'POST',
+                url: '/tasks',
+                data: {name: value}
+            }).then(function(response){
+                displayList();
+            }).catch(function(er){
+                alert('error adding new task', err);
+            })
+        }else{
+            swal("please fill out task before hitting submit!");
+        }
     });   
 }//end addTask
 
 function completeMe(id,completedSwap){
+    //change tasks table to reflect the completed option and display to DOM
     $.ajax({
         type: 'PUT',
         url: `/tasks/${id}`,
         data: {completed: completedSwap}
     }).then(function(response){
-        console.log('back from PUT:', response);
+        //console.log('back from PUT:', response);
         displayList();
     }).catch(function(err){
         alert('error updating completed task!', err);
@@ -47,6 +49,7 @@ function completeMe(id,completedSwap){
 }//end CompleteMe
 
 function completeSwap(){
+    //toggle between Y and N for task complete
     let selectedId = $(this).parent().data('id');
     let selectedCompleted = $(this).data('completed');
     console.log('in completeMe with id:', selectedId, selectedCompleted);
@@ -60,8 +63,9 @@ function completeSwap(){
 }//end completeSwap
 
 function deleteMe(){
+    //use sweet alerts to get confirm message upon delete button click
     let selectedId = $(this).data('id');
-    console.log('in deleteMe with id:', selectedId);
+    //console.log('in deleteMe with id:', selectedId);
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this task",
@@ -90,11 +94,12 @@ function deleteMe(){
 }//end deleteMe
 
 function displayList(){
+    //call database and display current tasks, match class to completed
     $.ajax({
         type: 'GET',
         url: '/tasks'
     }).then(function (response){
-        console.log(response);
+        //console.log(response);
         let el = $('.taskList');
         el.empty();
         for(let i=0; i<response.length; i++){
@@ -119,9 +124,10 @@ function displayList(){
 }//end displayList
 
 function getDate(){
+    //use javascript built in functions to display date on DOM
     var d = new Date();
-    var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-    console.log(strDate);
+    var strDate = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+    //console.log(strDate);
     let el = $('.displayDate');
     el.empty();
     el.append(`<h1>${strDate}</h1>`);

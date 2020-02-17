@@ -1,4 +1,4 @@
-body{
+body {
     background-color: cyan;
 }
 
@@ -28,7 +28,7 @@ body{
     text-decoration: line-through;
 }
 
-.wrapper{
+.wrapper {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-auto-rows: minmax(65px, auto);
@@ -39,7 +39,7 @@ body{
     font-size: larger;
 }
 
-.headerBox{
+.headerBox {
     grid-column: span 9;
     grid-row: span 3;
     border: 2px solid #ffa94d;
@@ -50,7 +50,7 @@ body{
     background-size: 100%;
 }
 
-.displayDate{
+.displayDate {
     z-index: 2;
 }
 
@@ -66,16 +66,6 @@ body{
     background-size: 100%;
     grid-column-start: 5;
     grid-column-end: span 1;
-}
-
-.addTask { 
-    display: flex;
-    border: 2px solid #ffa94d;
-    border-radius: 5px;
-    background-color: #ffd8a8;
-    padding: 1em;
-    color: #d9480f;
-    font-size: larger;
 }
 
 .addTaskButton {

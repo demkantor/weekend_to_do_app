@@ -43,6 +43,20 @@ router.put('/:id', (req,res)=>{
     })
 })//end PUT tasks
 
+//add note to task
+router.put('/notes/:id', (req,res)=>{
+    console.log('in tasks/notes PUT:', req.params.id, req.body.value);
+    const query = `UPDATE "tasks" SET "notes"=$1 WHERE id=$2;`;
+    const values =[req.body.value, req.params.id];
+    pool.query(query, values).then((results)=>{
+        console.table(results);
+        res.sendStatus(200);
+    }).catch((err)=>{
+        console.log('error with UPDATE', err);
+        res.sendStatus(500);
+    })
+})//end PUT tasks
+
 //delete task row from database by id
 router.delete('/:id', (req,res)=>{
     console.log('tasks DELETE table row:', req.params.id);

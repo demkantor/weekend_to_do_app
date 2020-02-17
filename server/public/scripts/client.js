@@ -8,7 +8,29 @@ function onReady(){
     getDate();
     $('.taskList').on('click', '.deleteMeButton', deleteMe);
     $('.taskList').on('click', '.completeMeButton', completeSwap);
+    $('.box').on('dblclick', '.tasks', addNote);
+    $('.box').on('dblclick', '.completedTasks', addNote);
     $('.addTaskButton').on('click', addTask);
+}
+
+function addNote(){
+    let id = $(this).data('id');
+    swal("feel free to add a note to your task:", {
+        content: "input",
+      })
+      .then((value) => {
+            $.ajax({
+                type: 'PUT',
+                url: `/tasks/notes/${id}`,
+                data: {value: value}
+            }).then(function(response){
+                console.log('back from notes PUT:', response);
+                displayList();
+            }).catch(function(err){
+                alert('error adding notes to task!', err);
+            })
+            swal(`Added:  "${value}"  as a note to your task!`);
+        });
 }
 
 function addTask(){

@@ -2,6 +2,8 @@
 const pg = require('pg');
 
 const config = {
+    user: 'postgres',
+    password: '1728fox',
     database: 'weekend_to_do_app',
     host: 'localhost',
     port: 5432,

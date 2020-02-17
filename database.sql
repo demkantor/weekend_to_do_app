@@ -1,3 +1,5 @@
+-- database name weekend_to_do_app
+
 
 CREATE TABLE tasks(
 		"id" SERIAL PRIMARY KEY,
@@ -10,6 +12,7 @@ CREATE TABLE tasks(
 INSERT INTO tasks ("name", "completes", "notes")
 VALUES ('Wake Up','N','hard one'),
 ('Shower','N','got to wash off yestarday'),
+('Eat a book','N','nummy),
 ('Walk the Dogs','N','Great day out, enjoy the sun!');
 
 

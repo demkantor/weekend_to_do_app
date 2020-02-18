@@ -10,7 +10,7 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 //server up!
-const port = 5000
+const port = process.env.PORT || 5000
 app.listen(port, ()=>{
     console.log('server up on:', port);
 })

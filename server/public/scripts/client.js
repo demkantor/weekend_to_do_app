@@ -15,22 +15,39 @@ function onReady(){
 
 function addNote(){
     let id = $(this).data('id');
-    swal("feel free to add a note to your task:", {
-        content: "input",
-      })
-      .then((value) => {
-            $.ajax({
-                type: 'PUT',
-                url: `/tasks/notes/${id}`,
-                data: {value: value}
-            }).then(function(response){
-                console.log('back from notes PUT:', response);
-                displayList();
-            }).catch(function(err){
-                alert('error adding notes to task!', err);
-            })
-            swal(`Added:  "${value}"  as a note to your task!`);
-        });
+    $.ajax({
+        type: 'GET',
+        url: `/tasks/notes/${id}`
+    }).then(function (response){
+        for(let i=0; i<response.length; i++){
+            let currentNote = response[i].notes;
+            swal({
+                title: `Current note is: ${currentNote}`, 
+                text: `Feel free to add or change the note in your task:`,
+                content: "input",
+                button: "Note me!"
+              })
+              .then((value) => {
+                    $.ajax({
+                        type: 'PUT',
+                        url: `/tasks/notes/${id}`,
+                        data: {value: value}
+                    }).then(function(response){
+                        console.log('back from notes PUT:', response);
+                        displayList();
+                    }).catch(function(err){
+                        alert('error adding notes to task!', err);
+                    })
+                    swal({
+                        title: "You added this note to your task:",
+                        text: `${value}`,
+                        icon: "success",
+                        button: "Note Saved!",
+                      });
+                });
+
+        }
+    })
 }
 
 function addTask(){

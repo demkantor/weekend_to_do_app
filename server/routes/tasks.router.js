@@ -16,6 +16,20 @@ router.get('/', (req,res)=>{
     })
 })//end GET tasks
 
+//get notes by id from database
+router.get('/notes/:id', (req,res)=>{
+    console.log('in /tasks GET  notes');
+    const query = `SELECT * FROM "tasks" WHERE id=$1;`;
+    const values =[req.params.id];
+    pool.query(query, values).then((results)=>{
+        console.table(results.rows);
+        res.send(results.rows);
+    }).catch((err)=>{
+        console.log('ERROR with /tasks GET', err);
+        res.sendStatus(500);
+    })
+})//end GET notes from tasks
+
 //add new task to database
 router.post('/', (req,res)=>{
     console.log('in /tasks POST:', req.body);
